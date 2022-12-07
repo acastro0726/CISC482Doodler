@@ -1,5 +1,9 @@
 # CISC482Doodler
 
+_____________________________________________________________________________________________________________________________________
+
+HOW TO RUN:
+
 In order to run this project you should run the following:
 
 git clone https://github.com/acastro0726/CISC482Doodler.git
@@ -7,7 +11,10 @@ git clone https://github.com/acastro0726/CISC482Doodler.git
 Now open the cloned repo in android studio! You are ready to see this project!
 
 
-Resources Used & Dependencies Used:
+______________________________________________________________________________________________________________________________________
+
+
+Resources & Dependencies Used:
 
 implementation 'com.github.duanhong169:colorpicker:1.1.6'
 
