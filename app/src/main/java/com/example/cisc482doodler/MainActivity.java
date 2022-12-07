@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         Button clearButton = findViewById(R.id.clearButton);
         Button colorButton = findViewById(R.id.colorButton);
 
-        DoodleView doodleCanvas = findViewById(R.id.doodleView);
+        DoodleView Canvas = findViewById(R.id.doodleView);
 
         SeekBar brushBar = findViewById(R.id.brushBar);
         brushBar.setMax(30);
@@ -27,14 +27,14 @@ public class MainActivity extends AppCompatActivity {
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doodleCanvas.clearButtonPressed();
+                Canvas.clearButtonPressed();
             }
         });
 
         colorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ColorPickerPopup.Builder(MainActivity.this).initialColor(doodleCanvas.getCurrColor())
+                new ColorPickerPopup.Builder(MainActivity.this).initialColor(Canvas.getCurrColor())
                         .enableBrightness(true)
                         .enableAlpha(true)
                         .okTitle("Finish")
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                         .build().show(v, new ColorPickerPopup.ColorPickerObserver() {
                             @Override
                             public void onColorPicked(int color) {
-                                doodleCanvas.changeColor(color);
+                                Canvas.changeColor(color);
                             }
                         });
             }
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                doodleCanvas.changeWidth(seekBar.getProgress());
+                Canvas.changeWidth(seekBar.getProgress());
             }
         });
     }
