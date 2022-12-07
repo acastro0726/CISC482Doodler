@@ -13,11 +13,22 @@ import java.util.ArrayList;
 
 public class DoodleView extends View {
 
+    private static class UserMovement {
+
+        public Paint paintBrush;
+        public Path path;
+
+        public UserMovement(Path path, Paint paintBrush) {
+            this.paintBrush = paintBrush;
+            this.path = path;
+        }
+    }
+
     private Paint paintBrush = new Paint();
     private Path path = new Path();
 
-    private ArrayList<Path> paths = new ArrayList<>();
-    private ArrayList<Paint> paintBrushes = new ArrayList<>();
+    private ArrayList<UserMovement> movements = new ArrayList<>();
+    private ArrayList<UserMovement> undoneMovements = new ArrayList<>();
 
 
     public DoodleView(Context context, AttributeSet attrs) {
@@ -29,8 +40,6 @@ public class DoodleView extends View {
         paintBrush.setStrokeJoin(Paint.Join.ROUND);
         paintBrush.setStrokeWidth(8f);
 
-        paths.add(path);
-        paintBrushes.add(paintBrush);
     }
 
     public DoodleView(Context context) {
@@ -45,9 +54,7 @@ public class DoodleView extends View {
         paintBrush.setStrokeJoin(Paint.Join.ROUND);
         paintBrush.setStrokeWidth(currentWidth);
         paintBrush.setColor(color);
-        paintBrushes.add(paintBrush);
         path = new Path();
-        paths.add(path);
         invalidate();
     }
 
@@ -60,9 +67,7 @@ public class DoodleView extends View {
         paintBrush.setColor(currentColor);
         int newWidth = 8 + width;
         paintBrush.setStrokeWidth(newWidth);
-        paintBrushes.add(paintBrush);
         path = new Path();
-        paths.add(path);
         invalidate();
     }
 
@@ -73,9 +78,18 @@ public class DoodleView extends View {
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             path.moveTo(pointX, pointY);
+            movements.add(new UserMovement(path, paintBrush));
             return true;
         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+            if (undoneMovements.size() > 0) {
+                undoneMovements.clear();
+            }
             path.lineTo(pointX, pointY);
+        }
+        else if (event.getAction() == MotionEvent.ACTION_UP) {
+            movements.remove(movements.size() - 1);
+            movements.add(new UserMovement(path, paintBrush));
+            path = new Path();
         }
         postInvalidate();
         return false;
@@ -83,11 +97,27 @@ public class DoodleView extends View {
 
     public void clearButtonPressed() {
         path = new Path();
-        paths.clear();
-        paintBrushes.clear();
-        paths.add(path);
-        paintBrushes.add(paintBrush);
+        movements.clear();
+        undoneMovements.clear();
         invalidate();
+    }
+
+    public void undoButtonPressed() {
+        if (movements.size() > 0) {
+            UserMovement undoneMovement = movements.get(movements.size() - 1);
+            undoneMovements.add(undoneMovement);
+            movements.remove(movements.size() - 1);
+            path = new Path();
+            invalidate();
+        }
+    }
+
+    public void redoButtonPressed() {
+        if (undoneMovements.size() > 0) {
+            movements.add(undoneMovements.get(undoneMovements.size() - 1));
+            undoneMovements.remove(undoneMovements.size() - 1);
+            invalidate();
+        }
     }
 
     public int getCurrColor() {
@@ -97,10 +127,8 @@ public class DoodleView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (int i = 0; i < paths.size(); i++) {
-            path = paths.get(i);
-            paintBrush = paintBrushes.get(i);
-            canvas.drawPath(path, paintBrush);
+        for (UserMovement movement : movements) {
+            canvas.drawPath(movement.path, movement.paintBrush);
         }
     }
 }
