@@ -24,7 +24,7 @@ public class DoodleView extends View {
         super(context, attrs);
 
         paintBrush.setAntiAlias(true);
-        paintBrush.setColor(Color.RED);
+        paintBrush.setColor(Color.BLACK);
         paintBrush.setStyle(Paint.Style.STROKE);
         paintBrush.setStrokeJoin(Paint.Join.ROUND);
         paintBrush.setStrokeWidth(8f);
@@ -38,12 +38,12 @@ public class DoodleView extends View {
     }
 
     public void changeColor(int color) {
-        float currWidth = paintBrush.getStrokeWidth();
+        float currentWidth = paintBrush.getStrokeWidth();
         paintBrush = new Paint();
         paintBrush.setAntiAlias(true);
         paintBrush.setStyle(Paint.Style.STROKE);
         paintBrush.setStrokeJoin(Paint.Join.ROUND);
-        paintBrush.setStrokeWidth(currWidth);
+        paintBrush.setStrokeWidth(currentWidth);
         paintBrush.setColor(color);
         paintBrushes.add(paintBrush);
         path = new Path();
@@ -52,12 +52,12 @@ public class DoodleView extends View {
     }
 
     public void changeWidth(int width) {
-        int currColor = paintBrush.getColor();
+        int currentColor = paintBrush.getColor();
         paintBrush = new Paint();
         paintBrush.setAntiAlias(true);
         paintBrush.setStyle(Paint.Style.STROKE);
         paintBrush.setStrokeJoin(Paint.Join.ROUND);
-        paintBrush.setColor(currColor);
+        paintBrush.setColor(currentColor);
         int newWidth = 8 + width;
         paintBrush.setStrokeWidth(newWidth);
         paintBrushes.add(paintBrush);

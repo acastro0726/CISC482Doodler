@@ -37,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
                 new ColorPickerPopup.Builder(MainActivity.this).initialColor(Canvas.getCurrColor())
                         .enableBrightness(true)
                         .enableAlpha(true)
-                        .okTitle("Finish")
-                        .cancelTitle("Cancel")
+                        .okTitle("Done")
+                        .cancelTitle("Quit")
                         .showIndicator(true)
                         .showValue(false)
                         .build().show(v, new ColorPickerPopup.ColorPickerObserver() {
