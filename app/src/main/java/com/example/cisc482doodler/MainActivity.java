@@ -1,12 +1,23 @@
 package com.example.cisc482doodler;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.media.Image;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import top.defaults.colorpicker.ColorPickerPopup;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,11 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
         Button clearButton = findViewById(R.id.clearButton);
         Button colorButton = findViewById(R.id.colorButton);
+        ImageButton undoButton = (ImageButton)findViewById(R.id.undoButton);
+        ImageButton redoButton = (ImageButton)findViewById(R.id.redoButton);
 
         DoodleView Canvas = findViewById(R.id.doodleView);
 
         SeekBar brushBar = findViewById(R.id.brushBar);
         brushBar.setMax(30);
+
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +64,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        undoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Canvas.undoButtonPressed();
+            }
+        });
+
+        redoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Canvas.redoButtonPressed();
+            }
+        });
+
+
         brushBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) { }
@@ -63,5 +92,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+
 
 }
