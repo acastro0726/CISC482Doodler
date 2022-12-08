@@ -26,5 +26,7 @@ https://www.youtube.com/watch?v=xGrOHLk60q8
 
 https://ssaurel.medium.com/learn-to-create-a-paint-application-for-android-5b16968063f8
 
+https://stackoverflow.com/questions/11114625/android-canvas-redo-and-undo-operation
+
 
 
